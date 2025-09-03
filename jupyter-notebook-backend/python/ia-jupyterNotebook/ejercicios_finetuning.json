@@ -1,0 +1,422 @@
+[
+  {
+    "prompt": "Crea una variable llamada `ciudad` y asígnale el nombre de tu ciudad. Imprime el valor de la variable.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nciudad = \"Guadalajara\"\nprint(ciudad)\n```"
+  },
+  {
+    "prompt": "Calcula el área de un cuadrado cuyo lado mide 5 unidades. Imprime el resultado.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nlado = 5\narea = lado * lado\nprint(f\"El área del cuadrado es: {area}\")\n```"
+  },
+  {
+    "prompt": "Pide al usuario su nombre y luego imprímelo en mayúsculas.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nnombre = input(\"¿Cuál es tu nombre? \")\nprint(nombre.upper())\n```"
+  },
+  {
+    "prompt": "Crea una lista con los números del 1 al 5. Luego, añade el número 6 al final de la lista.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nnumeros = [1, 2, 3, 4, 5]\nnumeros.append(6)\nprint(numeros)\n```"
+  },
+  {
+    "prompt": "Dado un string, imprime el carácter en la tercera posición (índice 2).",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ntexto = \"Python\"\nprint(texto[2])\n```"
+  },
+  {
+    "prompt": "Crea un diccionario que represente un libro, con claves 'titulo' y 'autor'. Imprime el título del libro.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nlibro = {\n    \"titulo\": \"Cien Años de Soledad\",\n    \"autor\": \"Gabriel García Márquez\"\n}\nprint(libro[\"titulo\"])\n```"
+  },
+  {
+    "prompt": "Escribe un programa que determine si un número (ej. 25) es mayor que 10.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nnumero = 25\nif numero > 10:\n    print(f\"{numero} es mayor que 10\")\nelse:\n    print(f\"{numero} no es mayor que 10\")\n```"
+  },
+  {
+    "prompt": "Usa un bucle `for` para imprimir los nombres de una lista de países.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\npaises = [\"México\", \"Canadá\", \"Brasil\", \"Japón\"]\nfor pais in paises:\n    print(pais)\n```"
+  },
+  {
+    "prompt": "Define una función simple `sumar` que reciba dos números y devuelva su suma.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef sumar(a, b):\n    return a + b\n\nresultado = sumar(15, 30)\nprint(resultado)\n```"
+  },
+  {
+    "prompt": "Crea una tupla con tres colores diferentes e intenta modificar el segundo elemento. Observa el error.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ncolores = (\"rojo\", \"verde\", \"azul\")\n# La siguiente línea generará un error porque las tuplas son inmutables.\n# colores[1] = \"amarillo\"\nprint(\"Intentar modificar una tupla genera un TypeError.\")\nprint(colores)\n```"
+  },
+  {
+    "prompt": "Pide al usuario que ingrese su edad y convierte la entrada a un número entero.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nedad_str = input(\"Ingresa tu edad: \")\nedad_num = int(edad_str)\nprint(f\"El próximo año tendrás {edad_num + 1} años.\")\n```"
+  },
+  {
+    "prompt": "Comprueba si la palabra 'python' está presente en el string 'Me encanta programar en python'.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nfrase = \"Me encanta programar en python\"\nif \"python\" in frase:\n    print(\"La palabra 'python' fue encontrada.\")\nelse:\n    print(\"La palabra 'python' no fue encontrada.\")\n```"
+  },
+  {
+    "prompt": "Crea una lista de números y utiliza la función `len()` para imprimir cuántos elementos tiene.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nmi_lista = [10, 20, 30, 40, 50, 60]\nprint(f\"La lista tiene {len(mi_lista)} elementos.\")\n```"
+  },
+  {
+    "prompt": "Escribe un bucle `while` que cuente de 1 a 5.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ncontador = 1\nwhile contador <= 5:\n    print(contador)\n    contador += 1\n```"
+  },
+  {
+    "prompt": "Dado un diccionario, añade un nuevo par clave-valor: 'profesion': 'Ingeniero'.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\npersona = {\"nombre\": \"Ana\", \"edad\": 28}\npersona[\"profesion\"] = \"Ingeniera\"\nprint(persona)\n```"
+  },
+  {
+    "prompt": "Crea una función que acepte un radio y calcule el área de un círculo ($Area = \\pi r^2$). Utiliza `math.pi`.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nimport math\n\ndef area_circulo(radio):\n    return math.pi * (radio ** 2)\n\nprint(f\"{area_circulo(10):.2f}\")\n```"
+  },
+  {
+    "prompt": "Dada una lista de números, crea una nueva lista con los números multiplicados por 2, usando un bucle `for`.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nnumeros = [1, 2, 3, 4, 5]\nnumeros_duplicados = []\nfor num in numeros:\n    numeros_duplicados.append(num * 2)\nprint(numeros_duplicados)\n```"
+  },
+  {
+    "prompt": "Convierte el string '123.45' a un número de punto flotante (float).",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nnumero_str = \"123.45\"\nnumero_float = float(numero_str)\nprint(numero_float)\n```"
+  },
+  {
+    "prompt": "Imprime los primeros 10 números pares usando `range()` con un paso específico.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nfor i in range(2, 21, 2):\n    print(i)\n```"
+  },
+  {
+    "prompt": "Crea un conjunto (set) a partir de una lista con elementos duplicados para eliminar los duplicados.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nlista_con_duplicados = [1, 2, 2, 3, 4, 4, 5, 1]\nconjunto_unico = set(lista_con_duplicados)\nprint(conjunto_unico)\n```"
+  },
+  {
+    "prompt": "Escribe una función que devuelva `True` si un número es positivo y `False` en caso contrario.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef es_positivo(numero):\n    return numero > 0\n\nprint(es_positivo(10))\nprint(es_positivo(-5))\n```"
+  },
+  {
+    "prompt": "Genera un número aleatorio entre 1 y 100 usando el módulo `random`.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nimport random\n\nnumero_aleatorio = random.randint(1, 100)\nprint(f\"Número aleatorio: {numero_aleatorio}\")\n```"
+  },
+  {
+    "prompt": "Dada una lista de palabras, únelas en un solo string separado por espacios.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\npalabras = [\"Python\", \"es\", \"un\", \"lenguaje\", \"poderoso\"]\nfrase = \" \".join(palabras)\nprint(frase)\n```"
+  },
+  {
+    "prompt": "Itera sobre las claves y valores de un diccionario e imprímelos.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ncapitales = {\"Francia\": \"París\", \"Italia\": \"Roma\", \"España\": \"Madrid\"}\nfor pais, capital in capitales.items():\n    print(f\"La capital de {pais} es {capital}\")\n```"
+  },
+  {
+    "prompt": "Escribe un programa que pida un número y lo imprima solo si es mayor a 50.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nnumero = int(input(\"Ingresa un número: \"))\nif numero > 50:\n    print(numero)\n```"
+  },
+  {
+    "prompt": "Crea una lista de números del 10 al 1 en orden descendente.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nnumeros_desc = list(range(10, 0, -1))\nprint(numeros_desc)\n```"
+  },
+  {
+    "prompt": "Define una función con un parámetro con un valor por defecto.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef saludar(nombre=\"Mundo\"):\n    print(f\"Hola, {nombre}!\")\n\nsaludar(\"Ana\")\nsaludar()\n```"
+  },
+  {
+    "prompt": "Usa una comprensión de listas para crear una lista con los cuadrados de los números del 1 al 10.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ncuadrados = [x**2 for x in range(1, 11)]\nprint(cuadrados)\n```"
+  },
+  {
+    "prompt": "Dada una lista de números, encuentra el valor máximo y mínimo.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nlista_numeros = [4, 78, 9, 34, 1, 99, 23]\nprint(f\"Máximo: {max(lista_numeros)}\")\nprint(f\"Mínimo: {min(lista_numeros)}\")\n```"
+  },
+  {
+    "prompt": "Crea un script que escriba 'Hola, archivo!' en un archivo llamado 'salida.txt'.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nwith open(\"salida.txt\", \"w\") as f:\n    f.write(\"Hola, archivo!\")\nprint(\"Archivo 'salida.txt' creado con éxito.\")\n```"
+  },
+  {
+    "prompt": "Invierte el orden de los elementos en una lista.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nmi_lista = [\"a\", \"b\", \"c\", \"d\"]\nmi_lista.reverse()\nprint(mi_lista)\n```"
+  },
+  {
+    "prompt": "Calcula la longitud de un string sin usar `len()`.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ncadena = \"Hola Mundo\"\ncontador = 0\nfor _ in cadena:\n    contador += 1\nprint(f\"La longitud es: {contador}\")\n```"
+  },
+  {
+    "prompt": "Escribe una función que verifique si una palabra es un palíndromo (se lee igual al derecho y al revés).",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef es_palindromo(palabra):\n    palabra = palabra.lower()\n    return palabra == palabra[::-1]\n\nprint(es_palindromo(\"reconocer\"))\nprint(es_palindromo(\"python\"))\n```"
+  },
+  {
+    "prompt": "Filtra una lista de números para obtener solo los mayores a 20 usando una comprensión de listas.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nnumeros = [12, 55, 6, 23, 9, 41, 18]\nmayores_a_20 = [num for num in numeros if num > 20]\nprint(mayores_a_20)\n```"
+  },
+  {
+    "prompt": "Usa `try-except` para manejar el error que ocurre al intentar dividir por cero.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ntry:\n    resultado = 10 / 0\n    print(resultado)\nexcept ZeroDivisionError:\n    print(\"Error: No se puede dividir por cero.\")\n```"
+  },
+  {
+    "prompt": "Cuenta cuántas veces aparece la letra 'a' en una frase.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nfrase = \"la casa de la abuela es amarilla\"\nconteo = frase.count('a')\nprint(f\"La letra 'a' aparece {conteo} veces.\")\n```"
+  },
+  {
+    "prompt": "Ordena una lista de strings alfabéticamente.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nfrutas = [\"banana\", \"manzana\", \"cereza\", \"dátil\"]\nfrutas.sort()\nprint(frutas)\n```"
+  },
+  {
+    "prompt": "Crea una función lambda que multiplique su argumento por 10.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nmultiplicar_por_diez = lambda x: x * 10\nprint(multiplicar_por_diez(5))\n```"
+  },
+  {
+    "prompt": "Lee el archivo 'salida.txt' que creaste previamente y muestra su contenido.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ntry:\n    with open(\"salida.txt\", \"r\") as f:\n        contenido = f.read()\n        print(contenido)\nexcept FileNotFoundError:\n    print(\"El archivo 'salida.txt' no fue encontrado. Ejecuta el ejercicio anterior primero.\")\n```"
+  },
+  {
+    "prompt": "Suma todos los números en una lista.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nnumeros = [1, 2, 3, 4, 5]\nsuma_total = sum(numeros)\nprint(f\"La suma total es: {suma_total}\")\n```"
+  },
+  {
+    "prompt": "Reemplaza una palabra en un string. Reemplaza 'mundo' por 'Python' en 'Hola, mundo'.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nfrase = \"Hola, mundo\"\nnueva_frase = frase.replace(\"mundo\", \"Python\")\nprint(nueva_frase)\n```"
+  },
+  {
+    "prompt": "Verifica si todas las letras de un string son mayúsculas.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ntexto1 = \"HOLA\"\ntexto2 = \"Hola\"\nprint(f\"'{texto1}' es todo mayúsculas? {texto1.isupper()}\")\nprint(f\"'{texto2}' es todo mayúsculas? {texto2.isupper()}\")\n```"
+  },
+  {
+    "prompt": "Crea un diccionario usando una comprensión de diccionarios con números como claves y sus cuadrados como valores.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndicc_cuadrados = {x: x*x for x in range(1, 6)}\nprint(dicc_cuadrados)\n```"
+  },
+  {
+    "prompt": "Encuentra la intersección de dos conjuntos.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nset1 = {1, 2, 3, 4, 5}\nset2 = {4, 5, 6, 7, 8}\ninterseccion = set1.intersection(set2)\nprint(interseccion)\n```"
+  },
+  {
+    "prompt": "Escribe una función que genere los primeros n números de la secuencia de Fibonacci.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef fibonacci(n):\n    a, b = 0, 1\n    resultado = []\n    while len(resultado) < n:\n        resultado.append(a)\n        a, b = b, a + b\n    return resultado\n\nprint(fibonacci(10))\n```"
+  },
+  {
+    "prompt": "Elimina un elemento de una lista por su valor.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nletras = ['a', 'b', 'c', 'd', 'b']\nletras.remove('b') # Elimina solo la primera ocurrencia\nprint(letras)\n```"
+  },
+  {
+    "prompt": "Obtén la fecha y hora actual usando el módulo `datetime`.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nimport datetime\n\nahora = datetime.datetime.now()\nprint(f\"Fecha y hora actual: {ahora}\")\n```"
+  },
+  {
+    "prompt": "Escribe un programa que determine la categoría de edad de una persona (niño, adolescente, adulto).",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nedad = int(input(\"Ingresa una edad: \"))\nif edad < 13:\n    print(\"Niño/a\")\nelif 13 <= edad < 18:\n    print(\"Adolescente\")\nelse:\n    print(\"Adulto/a\")\n```"
+  },
+  {
+    "prompt": "Extrae los 3 primeros caracteres de un string usando slicing.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ncadena = \"Programación\"\nprint(cadena[:3])\n```"
+  },
+  {
+    "prompt": "Extrae los 3 últimos caracteres de un string usando slicing.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ncadena = \"Programación\"\nprint(cadena[-3:])\n```"
+  },
+  {
+    "prompt": "Concatena dos listas.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nlista1 = [1, 2, 3]\nlista2 = ['a', 'b', 'c']\nlista_concatenada = lista1 + lista2\nprint(lista_concatenada)\n```"
+  },
+  {
+    "prompt": "Define una función que acepte un número variable de argumentos posicionales (*args) y los sume.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef suma_variable(*args):\n    return sum(args)\n\nprint(suma_variable(1, 2, 3))\nprint(suma_variable(10, 20, 30, 40))\n```"
+  },
+  {
+    "prompt": "Encuentra el índice de un elemento en una lista.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nmi_lista = [10, 20, 30, 40, 50]\nindice = mi_lista.index(30)\nprint(f\"El índice de 30 es: {indice}\")\n```"
+  },
+  {
+    "prompt": "Capitaliza la primera letra de un string.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ncadena = \"hola mundo\"\nprint(cadena.capitalize())\n```"
+  },
+  {
+    "prompt": "Crea una lista de listas (una matriz 2x2) y accede al elemento en la segunda fila, primera columna.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nmatriz = [[1, 2], [3, 4]]\n# Fila 1 (segunda fila), Columna 0 (primera columna)\nelemento = matriz[1][0]\nprint(elemento)\n```"
+  },
+  {
+    "prompt": "Usa `map` y una función lambda para convertir una lista de temperaturas de Celsius a Fahrenheit.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ncelsius = [0, 10, 20, 30, 40]\n# Fórmula: (C * 9/5) + 32\nfahrenheit = list(map(lambda c: (c * 9/5) + 32, celsius))\nprint(fahrenheit)\n```"
+  },
+  {
+    "prompt": "Usa `filter` y una función lambda para obtener los números impares de una lista.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nnumeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nimpares = list(filter(lambda x: x % 2 != 0, numeros))\nprint(impares)\n```"
+  },
+  {
+    "prompt": "Elimina un par clave-valor de un diccionario usando `pop()`.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\npersona = {\"nombre\": \"Juan\", \"edad\": 25, \"ciudad\": \"Bogotá\"}\nvalor_eliminado = persona.pop(\"edad\")\nprint(f\"Se eliminó la edad: {valor_eliminado}\")\nprint(persona)\n```"
+  },
+  {
+    "prompt": "Escribe un bucle que se detenga (break) si encuentra un número mayor que 10 en una lista.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nnumeros = [2, 4, 6, 8, 12, 14, 16]\nfor num in numeros:\n    if num > 10:\n        print(f\"Detenido en el número {num}\")\n        break\n    print(num)\n```"
+  },
+  {
+    "prompt": "Escribe un bucle que salte (continue) las iteraciones donde el número es par.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nfor i in range(1, 11):\n    if i % 2 == 0:\n        continue\n    print(i)\n```"
+  },
+  {
+    "prompt": "Define una función que acepte un número variable de argumentos de palabra clave (**kwargs) e imprímelos.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef mostrar_info(**kwargs):\n    for clave, valor in kwargs.items():\n        print(f\"{clave}: {valor}\")\n\nmostrar_info(nombre=\"Tesla\", modelo=\"Model S\", anio=2024)\n```"
+  },
+  {
+    "prompt": "Verifica si una clave existe en un diccionario.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nmi_diccionario = {\"a\": 1, \"b\": 2, \"c\": 3}\nif \"b\" in mi_diccionario:\n    print(\"La clave 'b' existe.\")\nelse:\n    print(\"La clave 'b' no existe.\")\n```"
+  },
+  {
+    "prompt": "Calcula la media (promedio) de una lista de números.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nlista_numeros = [10, 20, 30, 40, 50]\nmedia = sum(lista_numeros) / len(lista_numeros)\nprint(f\"La media es: {media}\")\n```"
+  },
+  {
+    "prompt": "Añade el contenido de una lista a otra lista.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nlista_a = [1, 2, 3]\nlista_b = [4, 5, 6]\nlista_a.extend(lista_b)\nprint(lista_a)\n```"
+  },
+  {
+    "prompt": "Encuentra la diferencia entre dos conjuntos (elementos en el primero pero no en el segundo).",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nset_a = {1, 2, 3, 4, 5}\nset_b = {4, 5, 6, 7, 8}\ndiferencia = set_a.difference(set_b)\nprint(diferencia)\n```"
+  },
+  {
+    "prompt": "Usa una comprensión de conjuntos para crear un conjunto de letras únicas de una palabra.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\npalabra = \"programacion\"\nletras_unicas = {letra for letra in palabra}\nprint(letras_unicas)\n```"
+  },
+  {
+    "prompt": "Escribe un programa para encontrar todos los números divisibles por 7 pero no múltiplos de 5, entre 2000 y 3200.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nresultados = []\nfor i in range(2000, 3201):\n    if (i % 7 == 0) and (i % 5 != 0):\n        resultados.append(i)\nprint(resultados)\n```"
+  },
+  {
+    "prompt": "Abre un archivo, añade una nueva línea de texto sin borrar el contenido existente.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nwith open(\"salida.txt\", \"a\") as f: # 'a' es para 'append' (añadir)\n    f.write(\"\\nEsta es una nueva línea.\")\nprint(\"Texto añadido al archivo.\")\n```"
+  },
+  {
+    "prompt": "Divide un string en una lista de substrings basado en un delimitador (coma).",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndatos_csv = \"manzana,pera,uva,naranja\"\nlista_frutas = datos_csv.split(',')\nprint(lista_frutas)\n```"
+  },
+  {
+    "prompt": "Verifica si un string termina con un sufijo específico.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\narchivo = \"documento.pdf\"\nif archivo.endswith(\".pdf\"):\n    print(\"Es un archivo PDF.\")\n```"
+  },
+  {
+    "prompt": "Elimina los espacios en blanco al inicio y al final de un string.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ncadena_con_espacios = \"   hola mundo   \"\ncadena_limpia = cadena_con_espacios.strip()\nprint(f\"'{cadena_limpia}'\")\n```"
+  },
+  {
+    "prompt": "Crea una función que tome una lista y devuelva una nueva lista con elementos únicos en el orden original.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef unicos_en_orden(lista):\n    vistos = set()\n    resultado = []\n    for item in lista:\n        if item not in vistos:\n            vistos.add(item)\n            resultado.append(item)\n    return resultado\n\nmi_lista = [1, 2, 5, 2, 6, 5, 8, 1]\nprint(unicos_en_orden(mi_lista))\n```"
+  },
+  {
+    "prompt": "Obtén solo el año de la fecha actual.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nimport datetime\nanio_actual = datetime.date.today().year\nprint(f\"El año actual es {anio_actual}\")\n```"
+  },
+  {
+    "prompt": "Crea un diccionario con dos listas, una para claves y otra para valores.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nclaves = ['a', 'b', 'c']\nvalores = [1, 2, 3]\ndiccionario = dict(zip(claves, valores))\nprint(diccionario)\n```"
+  },
+  {
+    "prompt": "Comprueba si dos listas tienen al menos un elemento en común.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef hay_comun(lista1, lista2):\n    for item in lista1:\n        if item in lista2:\n            return True\n    return False\n\nprint(hay_comun([1, 2, 3], [3, 4, 5]))\nprint(hay_comun([1, 2, 3], [4, 5, 6]))\n```"
+  },
+  {
+    "prompt": "Aplana una lista de listas en una sola lista.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nlista_anidada = [[1, 2], [3, 4, 5], [6]]\nlista_plana = [item for sublist in lista_anidada for item in sublist]\nprint(lista_plana)\n```"
+  },
+  {
+    "prompt": "Rota los elementos de una lista hacia la izquierda en una posición.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nmi_lista = [1, 2, 3, 4, 5]\nlista_rotada = mi_lista[1:] + mi_lista[:1]\nprint(lista_rotada)\n```"
+  },
+  {
+    "prompt": "Encuentra los elementos comunes entre dos listas.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\nlista1 = [1, 2, 3, 4, 5]\nlista2 = [4, 5, 6, 7, 8]\ncomunes = [item for item in lista1 if item in lista2]\nprint(comunes)\n```"
+  },
+  {
+    "prompt": "Crea un generador para producir los primeros n números impares.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef generador_impares(n):\n    contador = 0\n    numero = 1\n    while contador < n:\n        yield numero\n        numero += 2\n        contador += 1\n\nfor impar in generador_impares(10):\n    print(impar)\n```"
+  },
+  {
+    "prompt": "Crea una función que reciba un string y devuelva el número de vocales que contiene.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef contar_vocales(texto):\n    return sum(1 for char in texto.lower() if char in 'aeiou')\n\nprint(contar_vocales(\"Hola Mundo\"))\n```"
+  },
+  {
+    "prompt": "Crea una función que reciba un número y devuelva su factorial.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n - 1)\n\nprint(factorial(5))\n```"
+  },
+  {
+    "prompt": "Crea una función que reciba un string y devuelva el mismo string pero con las palabras en orden inverso.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef invertir_palabras(texto):\n    return ' '.join(texto.split()[::-1])\n\nprint(invertir_palabras(\"Hola Mundo desde Python\"))\n```"
+  },
+  {
+    "prompt": "Crea una función que reciba una lista de números y devuelva una lista con los números pares.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef filtrar_pares(numeros):\n    return [num for num in numeros if num % 2 == 0]\n\nprint(filtrar_pares([1, 2, 3, 4, 5, 6]))\n```"
+  },
+  {
+    "prompt": "Crea una función que reciba un número y devuelva `True` si es primo, `False` en caso contrario.",
+    "notebook_input": "# Escribe tu solución aquí\n",
+    "solution": "```python\ndef es_primo(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nprint(es_primo(7))\nprint(es_primo(10))\n```"
+  }
+]
