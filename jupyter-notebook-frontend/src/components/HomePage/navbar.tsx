@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
   const menuItems = [
     { path: "/", label: "Inicio", icon: Home },
     { path: "/course-content", label: "Cursos", icon: BookOpen },
-    { path: "/recursos", label: "Recursos", icon: Info },
+    { path: "/resources", label: "Recursos", icon: Info },
     { path: "/contacto", label: "Contacto", icon: Mail },
   ];
 

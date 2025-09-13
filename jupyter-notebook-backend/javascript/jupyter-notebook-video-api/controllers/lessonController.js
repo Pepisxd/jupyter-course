@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const { PutObjectCommand } = require("@aws-sdk/client-s3");
 const s3Client = require("../utils/s3Client");
 const Lesson = require("../models/Lesson");
-const Chapter = require("../models/Chapter"); // Asegúrate de importar el modelo Chapter
+const Chapter = require("../models/Chapter");
 const mime = require("mime-types");
 
 exports.createLesson = async (req, res) => {

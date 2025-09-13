@@ -8,6 +8,7 @@ import NotFound from "../pages/404";
 import AuthModals from "../auth/auth-modals";
 import ContentManager from "../admin/contentManager";
 import ChatInterface from "../pages/ChatPage";
+import ResourcesPage from "../pages/resourcesPage";
 
 const AppRoutes = () => {
   return (
@@ -22,6 +23,7 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/resources" element={<ResourcesPage />} />
         <Route path="*" element={<Navigate to="/404" />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="/chat" element={<ChatInterface />} />

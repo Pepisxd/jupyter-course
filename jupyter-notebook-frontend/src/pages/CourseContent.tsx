@@ -166,6 +166,12 @@ const CourseContent: React.FC = () => {
           <p className="text-white/80">
             Vuelve más tarde para ver nuevo contenido.
           </p>
+          <Link
+            to="/"
+            className="mt-6 inline-block bg-[#FF5722] hover:bg-[#FF5722]/90 text-white py-2 px-6 rounded-lg text-sm font-medium"
+          >
+            Volver a la página de inicio
+          </Link>
         </div>
       </div>
     );
@@ -255,8 +261,8 @@ const CourseContent: React.FC = () => {
                                     activeLesson?.id === lesson.id
                                       ? "text-[#FF5722]"
                                       : lesson.locked
-                                      ? "text-white/50"
-                                      : "text-white/80"
+                                        ? "text-white/50"
+                                        : "text-white/80"
                                   }`}
                                   whileHover={{ x: 4 }}
                                   transition={{

@@ -11,26 +11,19 @@ const courseRoutes = require("./routes/courseRoutes"); // Rutas de cursos
 const chapterRoutes = require("./routes/chapterRoutes"); // Rutas de capítulos
 const lessonRoutes = require("./routes/lessonRoutes"); // Rutas de lecciones
 const jupyterRoutes = require("./routes/jupyterRoutes");
+const resourceStatsRoutes = require("./routes/resourceStats");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 const PORT = process.env.PORT;
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/cursos";
-
-// Iniciar servidor Jupyter
-const jupyterProcess = spawn(
-  "jupyter",
-  ["notebook", "--no-browser", "--port=8888"],
-  {
-    stdio: "inherit",
-  }
-);
-
-jupyterProcess.on("error", (err) => {
-  console.error("Error al iniciar Jupyter:", err);
-});
 
 // Rutas
 app.use("/api/auth", authRoutes);
@@ -38,12 +31,7 @@ app.use("/api/courses", courseRoutes);
 app.use("/api/chapters", chapterRoutes);
 app.use("/api/lessons", lessonRoutes);
 app.use("/api/jupyter", jupyterRoutes);
-
-// Ruta para servir archivos estáticos de Jupyter
-app.use(
-  "/jupyter",
-  express.static(path.join(__dirname, "node_modules/@jupyterlab"))
-);
+app.use("/api/resource-stats", resourceStatsRoutes);
 
 // Ruta de prueba
 app.get("/", (req, res) => {
