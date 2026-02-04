@@ -149,23 +149,6 @@ def main() -> None:
         training_args_kwargs["push_to_hub_token"] = None
 
     training_args = TrainingArguments(**training_args_kwargs)
-    # Workaround for older TRL expecting push_to_hub_token in args dict
-    if not hasattr(training_args, "push_to_hub_token"):
-        setattr(training_args, "push_to_hub_token", None)
-    if not hasattr(training_args, "push_to_hub"):
-        setattr(training_args, "push_to_hub", False)
-
-    original_to_dict = training_args.to_dict
-
-    def _to_dict_with_hub():
-        payload = original_to_dict()
-        if "push_to_hub_token" not in payload:
-            payload["push_to_hub_token"] = None
-        if "push_to_hub" not in payload:
-            payload["push_to_hub"] = False
-        return payload
-
-    training_args.to_dict = _to_dict_with_hub
 
     trainer_kwargs = dict(
         model=model,
