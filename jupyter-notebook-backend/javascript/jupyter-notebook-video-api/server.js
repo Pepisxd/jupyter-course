@@ -12,6 +12,7 @@ const chapterRoutes = require("./routes/chapterRoutes"); // Rutas de capítulos
 const lessonRoutes = require("./routes/lessonRoutes"); // Rutas de lecciones
 const jupyterRoutes = require("./routes/jupyterRoutes");
 const resourceStatsRoutes = require("./routes/resourceStats");
+const exerciseRoutes = require("./routes/exerciseRoutes");
 
 const app = express();
 app.use(express.json());
@@ -32,6 +33,7 @@ app.use("/api/chapters", chapterRoutes);
 app.use("/api/lessons", lessonRoutes);
 app.use("/api/jupyter", jupyterRoutes);
 app.use("/api/resource-stats", resourceStatsRoutes);
+app.use("/api/exercises", exerciseRoutes);
 
 // Ruta de prueba
 app.get("/", (req, res) => {

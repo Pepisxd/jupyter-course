@@ -20,7 +20,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
           animate={{ opacity: 1 }}
           className="flex flex-col items-center"
         >
-          {/* Círculo animado de Jupyter */}
           <div className="relative w-24 h-24 mb-6">
             <motion.div
               className="absolute inset-0 rounded-full border-4 border-[#FF5722]/30"

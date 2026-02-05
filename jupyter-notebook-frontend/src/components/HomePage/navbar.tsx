@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../../auth/auth-context";
 import { useAuthModal } from "../../auth/auth-modal-context";
-import { X, Menu, Home, BookOpen, Mail, Info } from "lucide-react";
+import { X, Menu, Home, BookOpen, Mail, Info, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
@@ -40,6 +40,7 @@ const Navbar: React.FC = () => {
   const menuItems = [
     { path: "/", label: "Inicio", icon: Home },
     { path: "/course-content", label: "Cursos", icon: BookOpen },
+    { path: "/exercises", label: "Ejercicios", icon: Sparkles },
     { path: "/resources", label: "Recursos", icon: Info },
     { path: "/contacto", label: "Contacto", icon: Mail },
   ];
