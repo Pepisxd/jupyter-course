@@ -23,12 +23,23 @@ python prepare_hf_dataset.py \
 
 Esto genera `hf_jupyter_messages.jsonl` con el formato `messages` para SFT.
 
+## 1.1) Convertir a dataset estructurado (schema JSON final)
+
+Este paso transforma el dataset en ejemplos con el JSON exacto que quieres en produccion.
+
+```bash
+python prepare_structured_dataset.py \
+  --input hf_jupyter_messages.jsonl \
+  --output hf_jupyter_structured.jsonl \
+  --max-samples 2000
+```
+
 ## 2) Fine-tuning (LoRA)
 
 ```bash
 python train_lora_qwen.py \
   --model-name Qwen/Qwen3-4B-Instruct-2507 \
-  --train-file hf_jupyter_messages.jsonl \
+  --train-file hf_jupyter_structured.jsonl \
   --output-dir qwen3-jupyter-lora \
   --max-steps 800
 ```
