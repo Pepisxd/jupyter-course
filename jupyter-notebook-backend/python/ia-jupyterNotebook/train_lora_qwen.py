@@ -167,12 +167,11 @@ def main() -> None:
             sft_config_kwargs["dataset_text_field"] = None
         if sft_config_kwargs:
             trainer_kwargs["sft_config"] = SFTConfig(**sft_config_kwargs)
-    if "tokenizer" in trainer_signature.parameters:
-        trainer_kwargs["tokenizer"] = tokenizer
-    if "max_seq_length" in trainer_signature.parameters:
-        trainer_kwargs["max_seq_length"] = cfg.max_seq_length
-    if "dataset_text_field" in trainer_signature.parameters:
-        trainer_kwargs["dataset_text_field"] = None
+
+
+    # Do NOT pass tokenizer/processing_class to avoid TRL/Transformers incompatibilities
+    if "max_seq_length" in trainer_signature.parameters and "sft_config" not in trainer_kwargs:
+    if "dataset_text_field" in trainer_signature.parameters and "sft_config" not in trainer_kwargs:
 
     trainer = SFTTrainer(**trainer_kwargs)
 
