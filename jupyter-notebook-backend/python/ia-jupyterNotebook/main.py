@@ -13,8 +13,22 @@ from pydantic import BaseModel, Field
 from peft import PeftModel
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
-BASE_MODEL = os.getenv("BASE_MODEL", "Qwen/Qwen3-4B-Instruct-2507")
-LORA_PATH = os.getenv("LORA_PATH", "./qwen3-jupyter-lora")
+MODEL_FAMILY = os.getenv("MODEL_FAMILY", "qwen").lower()
+
+MODEL_PRESETS: Dict[str, Dict[str, str]] = {
+    "qwen": {
+        "base_model": "Qwen/Qwen3-4B-Instruct-2507",
+        "lora_path": "./qwen3-jupyter-lora",
+    },
+    "codellama": {
+        "base_model": "codellama/CodeLlama-7b-Instruct-hf",
+        "lora_path": "Pepisxd/codellama-edugen-v2",
+    },
+}
+
+_preset = MODEL_PRESETS.get(MODEL_FAMILY, MODEL_PRESETS["qwen"])
+BASE_MODEL = os.getenv("BASE_MODEL", _preset["base_model"])
+LORA_PATH = os.getenv("LORA_PATH", _preset["lora_path"])
 MAX_NEW_TOKENS = int(os.getenv("MAX_NEW_TOKENS", "128"))
 GENERATION_MODE = os.getenv("GENERATION_MODE", "template").lower()
 
@@ -592,7 +606,13 @@ def load_pipeline():
 
 @app.get("/health")
 def health():
-    return {"ok": True}
+    return {
+        "ok": True,
+        "model_family": MODEL_FAMILY,
+        "base_model": BASE_MODEL,
+        "lora_path": LORA_PATH,
+        "generation_mode": GENERATION_MODE,
+    }
 
 
 @app.post("/generate")
