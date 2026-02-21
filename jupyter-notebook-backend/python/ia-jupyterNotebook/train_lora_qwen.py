@@ -7,15 +7,16 @@ import torch
 from datasets import load_dataset
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 from transformers import (
-  AutoModelForCausalLM,
-  AutoTokenizer,
-  BitsAndBytesConfig,
-  TrainingArguments,
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    BitsAndBytesConfig,
+    TrainingArguments,
 )
 from trl import SFTTrainer
+
 try:
     from trl import SFTConfig
-except ImportError:  # Older TRL versions
+except ImportError:
     SFTConfig = None
 
 
@@ -38,15 +39,12 @@ class TrainConfig:
 
 
 def build_prompt(tokenizer, messages: List[dict]) -> str:
-    return tokenizer.apply_chat_template(
-        messages, tokenize=False, add_generation_prompt=False
-    )
+    return tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
 
 
 def formatting_func(tokenizer):
     def _format(sample):
         return build_prompt(tokenizer, sample["messages"])
-
     return _format
 
 
@@ -56,16 +54,8 @@ def parse_args() -> TrainConfig:
     parser.add_argument("--train-file", default=TrainConfig.train_file)
     parser.add_argument("--output-dir", default=TrainConfig.output_dir)
     parser.add_argument("--max-steps", type=int, default=TrainConfig.max_steps)
-    parser.add_argument(
-        "--per-device-train-batch-size",
-        type=int,
-        default=TrainConfig.per_device_train_batch_size,
-    )
-    parser.add_argument(
-        "--gradient-accumulation-steps",
-        type=int,
-        default=TrainConfig.gradient_accumulation_steps,
-    )
+    parser.add_argument("--per-device-train-batch-size", type=int, default=TrainConfig.per_device_train_batch_size)
+    parser.add_argument("--gradient-accumulation-steps", type=int, default=TrainConfig.gradient_accumulation_steps)
     parser.add_argument("--learning-rate", type=float, default=TrainConfig.learning_rate)
     parser.add_argument("--max-seq-length", type=int, default=TrainConfig.max_seq_length)
     parser.add_argument("--lora-r", type=int, default=TrainConfig.lora_r)
@@ -75,12 +65,12 @@ def parse_args() -> TrainConfig:
     parser.add_argument("--logging-steps", type=int, default=TrainConfig.logging_steps)
     parser.add_argument("--warmup-ratio", type=float, default=TrainConfig.warmup_ratio)
     args = parser.parse_args()
-
     return TrainConfig(**vars(args))
 
 
 def main() -> None:
     cfg = parse_args()
+
     if torch.cuda.is_available():
         torch.backends.cuda.matmul.allow_tf32 = True
 
@@ -99,33 +89,28 @@ def main() -> None:
         cfg.model_name,
         device_map="auto",
         quantization_config=bnb_config,
-        dtype=torch.float16,
+        torch_dtype=torch.float16,
     )
 
     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
     model.config.use_cache = False
+
     model = prepare_model_for_kbit_training(model)
+
     lora_config = LoraConfig(
         r=cfg.lora_r,
         lora_alpha=cfg.lora_alpha,
         lora_dropout=cfg.lora_dropout,
         bias="none",
         task_type="CAUSAL_LM",
-        target_modules=[
-            "q_proj",
-            "k_proj",
-            "v_proj",
-            "o_proj",
-            "gate_proj",
-            "up_proj",
-            "down_proj",
-        ],
+        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
     )
     model = get_peft_model(model, lora_config)
 
     dataset = load_dataset("json", data_files=cfg.train_file, split="train")
 
     warmup_steps = int(cfg.max_steps * cfg.warmup_ratio)
+
     training_args_kwargs = dict(
         output_dir=cfg.output_dir,
         max_steps=cfg.max_steps,
@@ -158,6 +143,8 @@ def main() -> None:
     )
 
     trainer_signature = inspect.signature(SFTTrainer.__init__)
+
+    # Prefer SFTConfig if available
     if SFTConfig is not None and "sft_config" in trainer_signature.parameters:
         sft_config_kwargs = {}
         sft_signature = inspect.signature(SFTConfig.__init__)
@@ -165,16 +152,21 @@ def main() -> None:
             sft_config_kwargs["max_seq_length"] = cfg.max_seq_length
         if "dataset_text_field" in sft_signature.parameters:
             sft_config_kwargs["dataset_text_field"] = None
-        if sft_config_kwargs:
-            trainer_kwargs["sft_config"] = SFTConfig(**sft_config_kwargs)
+        trainer_kwargs["sft_config"] = SFTConfig(**sft_config_kwargs)
+    else:
+        # Older TRL
+        if "max_seq_length" in trainer_signature.parameters:
+            trainer_kwargs["max_seq_length"] = cfg.max_seq_length
+        if "dataset_text_field" in trainer_signature.parameters:
+            trainer_kwargs["dataset_text_field"] = None
 
-
-    # Do NOT pass tokenizer/processing_class to avoid TRL/Transformers incompatibilities
-    if "max_seq_length" in trainer_signature.parameters and "sft_config" not in trainer_kwargs:
-    if "dataset_text_field" in trainer_signature.parameters and "sft_config" not in trainer_kwargs:
+    # Pass tokenizer in the way your TRL supports (prevents the 'tokenizer' crash)
+    if "processing_class" in trainer_signature.parameters:
+        trainer_kwargs["processing_class"] = tokenizer
+    elif "tokenizer" in trainer_signature.parameters:
+        trainer_kwargs["tokenizer"] = tokenizer
 
     trainer = SFTTrainer(**trainer_kwargs)
-
     trainer.train()
     trainer.save_model(cfg.output_dir)
 
