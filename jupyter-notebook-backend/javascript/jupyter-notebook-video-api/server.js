@@ -16,9 +16,13 @@ const exerciseRoutes = require("./routes/exerciseRoutes");
 
 const app = express();
 app.use(express.json());
+app.use((req, res, next) => {
+  res.setTimeout(600000); // 10 min para uploads grandes
+  next();
+});
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost:5174"],
     credentials: true,
   })
 );

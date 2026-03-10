@@ -9,33 +9,28 @@ const { GetObjectCommand } = require("@aws-sdk/client-s3");
 // Obtener todos los cursos (protegido con autenticación)
 exports.getCourses = async (req, res) => {
   try {
-    console.log("Obteniendo cursos, capítulos y lecciones...");
-
-    // Obtener todas las lecciones
     const lessons = await Lesson.find().lean();
-    console.log("Número de lecciones encontradas:", lessons.length);
-
-    // Obtener todos los capítulos
     const chapters = await Chapter.find().lean();
-    console.log("Número de capítulos encontrados:", chapters.length);
 
-    // Función para generar URL firmada
+    // Función para generar URL firmada compatible con R2
     const generateSignedUrl = async (url) => {
       try {
-        if (!url) {
-          console.log("URL vacía, retornando null");
-          return null;
-        }
+        if (!url) return null;
 
-        console.log("Generando URL firmada para:", url);
-
-        // Extraer el bucket y la key de la URL de S3
         const urlObj = new URL(url);
-        const bucket = urlObj.hostname.split(".")[0];
-        const key = decodeURIComponent(urlObj.pathname.substring(1)); // Eliminar el '/' inicial y decodificar la URL
+        const isR2 = urlObj.hostname.includes("r2.cloudflarestorage.com");
 
-        console.log("Bucket:", bucket);
-        console.log("Key:", key);
+        let bucket, key;
+        if (isR2) {
+          // R2 URL: https://<accountId>.r2.cloudflarestorage.com/<bucket>/<key>
+          const pathParts = urlObj.pathname.substring(1).split("/");
+          bucket = pathParts[0];
+          key = decodeURIComponent(pathParts.slice(1).join("/"));
+        } else {
+          // S3 URL: https://<bucket>.s3.amazonaws.com/<key>
+          bucket = urlObj.hostname.split(".")[0];
+          key = decodeURIComponent(urlObj.pathname.substring(1));
+        }
 
         // Determinar el Content-Type basado en la extensión del archivo
         const fileExtension = key.split(".").pop().toLowerCase();
@@ -60,21 +55,13 @@ exports.getCourses = async (req, res) => {
           ResponseContentDisposition: "inline",
         });
 
-        // Generar URL firmada válida por 1 hora
         const signedUrl = await getSignedUrl(s3Client, command, {
           expiresIn: 3600,
         });
-        console.log("URL firmada generada exitosamente");
         return signedUrl;
       } catch (error) {
-        console.error("Error generando URL firmada:", error);
-        console.error("Detalles del error:", {
-          name: error.name,
-          message: error.message,
-          code: error.code,
-          key: error.key,
-        });
-        return null; // Devolver null en caso de error
+        console.error("Error generando URL firmada:", error.message);
+        return null;
       }
     };
 
@@ -111,10 +98,8 @@ exports.getCourses = async (req, res) => {
       lessons: lessonsByChapter[chapter._id.toString()] || [],
     }));
 
-    console.log("Cursos procesados:", coursesWithLessons.length);
-    if (coursesWithLessons.length > 0) {
+    if (false && coursesWithLessons.length > 0) {
       console.log(
-        "Ejemplo del primer curso:",
         JSON.stringify(
           {
             ...coursesWithLessons[0],

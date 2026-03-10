@@ -4,78 +4,39 @@ const {
   validateRequest,
 } = require("../utils/exerciseGenerator");
 
-const OLLAMA_HOST = process.env.OLLAMA_HOST || "http://localhost:11434";
-const OLLAMA_MODEL =
-  process.env.OLLAMA_MODEL || "qwen3:4b-instruct-2507";
-const OLLAMA_TIMEOUT_MS = Number(process.env.OLLAMA_TIMEOUT_MS || 30000);
+const MODAL_URL = process.env.MODAL_URL || "";
+const MODAL_TIMEOUT_MS = Number(process.env.MODAL_TIMEOUT_MS || 600000);
 
-const buildExercisePrompt = (parameters) => {
-  return [
-    "You are an expert instructor creating beginner-friendly Jupyter exercises.",
-    "Return ONLY valid JSON with the exact keys:",
-    "title, instructions, starterCode, solutionCode, expectedOutput, hints.",
-    "All text must be in Spanish.",
-    "Do not include markdown fences or extra text.",
-    "",
-    `Parameters:`,
-    `- topic: ${parameters.topic}`,
-    `- difficulty: ${parameters.difficulty}`,
-    `- exerciseType: ${parameters.exerciseType}`,
-    `- datasetSize: ${parameters.datasetSize}`,
-    "",
-    "Constraints:",
-    "- starterCode should be executable Python where possible.",
-    "- solutionCode must solve the task.",
-    "- hints must be an array of 2-4 short tips.",
-    "- expectedOutput must describe what the learner should see.",
-    "",
-    "JSON only.",
-  ].join("\n");
-};
-
-const parseJsonResponse = (rawText) => {
-  const trimmed = String(rawText || "").trim();
-  if (!trimmed) {
-    throw new Error("Empty response from model.");
-  }
-
-  const startIndex = trimmed.indexOf("{");
-  const endIndex = trimmed.lastIndexOf("}");
-  if (startIndex === -1 || endIndex === -1) {
-    throw new Error("Model response is not JSON.");
-  }
-
-  const jsonText = trimmed.slice(startIndex, endIndex + 1);
-  return JSON.parse(jsonText);
-};
-
-const validateExercisePayload = (exercise) => {
-  const errors = [];
-  if (!exercise || typeof exercise !== "object") {
-    return { ok: false, errors: ["Invalid JSON object."] };
-  }
-
-  const requiredFields = [
-    "title",
-    "instructions",
-    "starterCode",
-    "solutionCode",
-    "expectedOutput",
-    "hints",
-  ];
-
-  requiredFields.forEach((field) => {
-    if (!(field in exercise)) {
-      errors.push(`Missing field: ${field}`);
-    }
+// Modal puede devolver 303 con un URL de resultado para funciones lentas.
+// Esta función sigue el redirect y hace polling hasta obtener el resultado.
+async function fetchModalWithRedirect(url, body, signal) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+    signal,
+    redirect: "manual",
   });
 
-  if (exercise.hints && !Array.isArray(exercise.hints)) {
-    errors.push("hints must be an array.");
+  if (response.status === 303) {
+    const resultUrl = response.headers.get("location");
+    if (!resultUrl) throw new Error("Modal redirect sin location header.");
+
+    // Polling hasta que el resultado esté listo (Modal devuelve 202 mientras espera)
+    for (let i = 0; i < 120; i++) {
+      await new Promise((r) => setTimeout(r, 5000));
+      const poll = await fetch(resultUrl, { signal });
+      if (poll.status === 200) return poll;
+      if (poll.status !== 202) {
+        const text = await poll.text();
+        throw new Error(`Modal poll error ${poll.status}: ${text}`);
+      }
+    }
+    throw new Error("Modal: timeout esperando resultado.");
   }
 
-  return { ok: errors.length === 0, errors };
-};
+  return response;
+}
 
 const generateExerciseAI = async (req, res) => {
   const normalized = normalizeRequest(req.body || {});
@@ -89,37 +50,40 @@ const generateExerciseAI = async (req, res) => {
     });
   }
 
+  if (!MODAL_URL) {
+    return res.status(503).json({
+      error: "modal_not_configured",
+      message: "MODAL_URL no está configurado en el servidor.",
+    });
+  }
+
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), OLLAMA_TIMEOUT_MS);
+  const timeout = setTimeout(() => controller.abort(), MODAL_TIMEOUT_MS);
 
   try {
-    const prompt = buildExercisePrompt(normalized);
-
-    const response = await fetch(`${OLLAMA_HOST}/api/generate`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: OLLAMA_MODEL,
-        prompt,
-        stream: false,
-      }),
-      signal: controller.signal,
-    });
+    const response = await fetchModalWithRedirect(
+      `${MODAL_URL}/generate`,
+      {
+        topic: normalized.topic,
+        difficulty: normalized.difficulty,
+        exerciseType: normalized.exerciseType,
+        datasetSize: normalized.datasetSize,
+      },
+      controller.signal
+    );
 
     if (!response.ok) {
       const text = await response.text();
-      throw new Error(text || "Ollama request failed.");
+      throw new Error(text || "Modal request failed.");
     }
 
     const data = await response.json();
-    const exercise = parseJsonResponse(data.response);
-    const exerciseValidation = validateExercisePayload(exercise);
+    const exercise = data.exercise;
 
-    if (!exerciseValidation.ok) {
+    if (!exercise || !exercise.title) {
       return res.status(422).json({
         error: "invalid_ai_output",
-        message: "AI output missing required fields",
-        details: exerciseValidation.errors,
+        message: "La respuesta del modelo no contiene un ejercicio válido.",
       });
     }
 
@@ -127,20 +91,21 @@ const generateExerciseAI = async (req, res) => {
       meta: {
         createdAt: new Date().toISOString(),
         parameters: normalized,
-        model: OLLAMA_MODEL,
-        version: "v1-ai",
+        model: "codellama-edugen-v2",
+        source: data.source || "model",
+        version: "v2-modal",
       },
       exercise,
     });
   } catch (error) {
     const message =
       error && error.name === "AbortError"
-        ? "Ollama request timed out."
+        ? "La solicitud al modelo expiró. Intenta de nuevo."
         : error instanceof Error
         ? error.message
-        : "Unknown error.";
+        : "Error desconocido.";
     return res.status(500).json({
-      error: "ollama_error",
+      error: "modal_error",
       message,
     });
   } finally {

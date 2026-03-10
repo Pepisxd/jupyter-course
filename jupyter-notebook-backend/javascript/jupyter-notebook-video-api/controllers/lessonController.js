@@ -41,40 +41,41 @@ exports.createLesson = async (req, res) => {
     const videoContentType = mime.lookup(videoFile.originalname);
     videoFile.mimetype;
 
+    const bucket = process.env.R2_BUCKET_NAME;
+    const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
+
     await s3Client.send(
       new PutObjectCommand({
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: bucket,
         Key: videoKey,
         Body: videoFile.buffer,
         ContentType: videoContentType,
       })
     );
 
-    const videoUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${videoKey}`;
+    const videoUrl = `https://${accountId}.r2.cloudflarestorage.com/${bucket}/${videoKey}`;
 
     // Procesar miniatura (opcional)
     let thumbnailUrl = "";
     if (req.files?.thumbnail) {
       const thumbnailFile = req.files.thumbnail[0];
-      const thumbnailKey = `thumbnails/${uuidv4()}-${
-        thumbnailFile.originalname
-      }`;
+      const thumbnailKey = `thumbnails/${uuidv4()}-${thumbnailFile.originalname}`;
 
       await s3Client.send(
         new PutObjectCommand({
-          Bucket: process.env.AWS_BUCKET_NAME,
+          Bucket: bucket,
           Key: thumbnailKey,
           Body: thumbnailFile.buffer,
           ContentType: thumbnailFile.mimetype,
         })
       );
 
-      thumbnailUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${thumbnailKey}`;
+      thumbnailUrl = `https://${accountId}.r2.cloudflarestorage.com/${bucket}/${thumbnailKey}`;
     }
 
-    // 4. Crear la lección (Mongoose convertirá automáticamente el string a ObjectId)
+    // 4. Crear la lección y vincularla al capítulo
     const newLesson = new Lesson({
-      chapterId, // Asegúrate que esto sea un string de 24 caracteres hexadecimales
+      chapterId,
       title,
       duration,
       description,
@@ -84,9 +85,10 @@ exports.createLesson = async (req, res) => {
 
     await newLesson.save();
 
-    console.log("Archivos recibidos:", req.files);
-    console.log("Video:", req.files?.video?.[0]);
-    console.log("Thumbnail:", req.files?.thumbnail?.[0]);
+    // Agregar la lección al array del capítulo
+    await Chapter.findByIdAndUpdate(chapterId, {
+      $push: { lessons: newLesson._id },
+    });
 
     res.status(201).json({
       success: true,
