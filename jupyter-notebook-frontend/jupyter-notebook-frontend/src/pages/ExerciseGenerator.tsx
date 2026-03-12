@@ -1,4 +1,5 @@
 import { useState } from "react";
+import API_URL from "../lib/api";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Download,
@@ -101,7 +102,7 @@ const ExerciseGenerator = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/exercises/generate-ai",
+        `${API_URL}/api/exercises/generate-ai`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -129,7 +130,7 @@ const ExerciseGenerator = () => {
   const handleDownloadNotebook = async () => {
     if (!result) return;
     try {
-      const response = await fetch("http://localhost:3000/api/exercises/notebook", {
+      const response = await fetch(`${API_URL}/api/exercises/notebook`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(result.meta.parameters),

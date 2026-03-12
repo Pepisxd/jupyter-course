@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../lib/api";
 
 interface User {
   nombre: string;
@@ -35,7 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       // Obtener información del usuario
       axios
-        .get("http://localhost:3000/api/auth/me")
+        .get(`${API_URL}/api/auth/me`)
         .then((response) => {
           setUser(response.data);
         })
@@ -57,7 +58,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setLoading(true);
       setError(null);
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        `${API_URL}/api/auth/login`,
         {
           email,
           password,
@@ -86,7 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       setLoading(true);
       setError(null);
-      await axios.post("http://localhost:3000/api/auth/register", {
+      await axios.post(`${API_URL}/api/auth/register`, {
         nombre: name,
         email,
         password,

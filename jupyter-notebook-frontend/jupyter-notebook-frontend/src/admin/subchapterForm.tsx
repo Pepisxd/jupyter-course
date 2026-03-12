@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import API_URL from "../lib/api";
 import { Video, Clock, FileText, Save } from "lucide-react";
 import type { Chapter } from "./contentManager";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +49,7 @@ const SubchapterForm: React.FC<SubchapterFormProps> = () => {
   useEffect(() => {
     const fetchChapters = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/chapters");
+        const response = await fetch(`${API_URL}/api/chapters`);
         if (!response.ok) {
           throw new Error("Error al obtener los capítulos");
         }
@@ -130,7 +131,7 @@ const SubchapterForm: React.FC<SubchapterFormProps> = () => {
         console.log(`${key}:`, value);
       }
 
-      const response = await fetch("http://localhost:3000/api/lessons", {
+      const response = await fetch(`${API_URL}/api/lessons`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -1,6 +1,7 @@
 import type React from "react";
 import { useState } from "react";
 import { set, useForm } from "react-hook-form";
+import API_URL from "../lib/api";
 import { Book, Save } from "lucide-react";
 import type { Chapter } from "./contentManager";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +38,7 @@ const ChapterForm: React.FC<ChapterFormProps> = ({ onChapterCreated }) => {
     setApiError(null); // Limpiar errores anteriores
 
     try {
-      const response = await fetch("http://localhost:3000/api/chapters", {
+      const response = await fetch(`${API_URL}/api/chapters`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../auth/auth-context";
+import API_URL from "../lib/api";
 import { useForm, useFieldArray } from "react-hook-form";
 import {
   X,
@@ -51,7 +52,7 @@ const CourseForm: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/courses/upload${type}`,
+        `${API_URL}/api/courses/upload${type}`,
         {
           method: "POST",
           headers: {
@@ -164,7 +165,7 @@ const CourseForm: React.FC = () => {
       }
       const token = localStorage.getItem("token");
 
-      const response = await fetch("http://localhost:3000/api/courses", {
+      const response = await fetch(`${API_URL}/api/courses`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

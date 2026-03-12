@@ -29,7 +29,7 @@ export const useResourceStats = () => {
 
   const [loading, setLoading] = useState<boolean>(true);
 
-  const API_BASE_URL = "http://localhost:3000/api";
+  const API_BASE_URL = `${import.meta.env.VITE_API_URL ?? "http://localhost:3000"}/api`;
 
   const fetchUserStars = async () => {
     if (!isAuthenticated || !user) {

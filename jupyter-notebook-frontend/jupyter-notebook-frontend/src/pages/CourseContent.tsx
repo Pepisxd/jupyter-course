@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/HomePage/navbar";
 import axios from "axios";
+import API_URL from "../lib/api";
 import {
   Play,
   CheckCircle,
@@ -304,7 +305,7 @@ const CourseContent: React.FC = () => {
     }
 
     axios
-      .get("http://localhost:3000/api/courses", {
+      .get(`${API_URL}/api/courses`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
