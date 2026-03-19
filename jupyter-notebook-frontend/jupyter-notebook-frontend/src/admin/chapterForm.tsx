@@ -1,6 +1,6 @@
 import type React from "react";
 import { useState } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import API_URL from "../lib/api";
 import { Book, Save } from "lucide-react";
 import type { Chapter } from "./contentManager";

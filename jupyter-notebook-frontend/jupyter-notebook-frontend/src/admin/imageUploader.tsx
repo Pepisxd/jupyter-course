@@ -8,7 +8,7 @@ interface ImageUploaderProps {
 
 export default function ImageUploader({ onImageChange }: ImageUploaderProps) {
   const [file, setFile] = useState<File | null>(null);
-  const [status, setStatus] = useState<UploadStatus>("idle");
+  const [, setStatus] = useState<UploadStatus>("idle");
 
   function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files) {

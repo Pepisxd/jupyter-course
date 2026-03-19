@@ -45,7 +45,7 @@ const ChatInterface: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
-  const simulateAIResponse = (userMessage: string): string => {
+  const simulateAIResponse = (_userMessage: string): string => {
     const responses = [
       "Excelente pregunta. En Jupyter Notebooks, puedes usar esa funcionalidad para mejorar tu análisis de datos.",
       "Te recomiendo explorar las librerías de Python como pandas y numpy para ese tipo de operaciones.",
