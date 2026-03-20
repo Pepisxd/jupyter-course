@@ -161,7 +161,7 @@ export default function JupyterVideoPlayer({
 
   // Efecto para ocultar controles después de un tiempo de inactividad
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
     const player = playerRef.current;
 
     const handleMouseMove = () => {
