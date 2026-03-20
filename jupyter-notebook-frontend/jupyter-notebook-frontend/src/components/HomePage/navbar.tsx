@@ -8,6 +8,7 @@ import { useAuth } from "../../auth/auth-context";
 import { useAuthModal } from "../../auth/auth-modal-context";
 import { X, Menu, Home, BookOpen, Mail, Info, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import jupyterLogo from "../../assets/jupyter-logo.png";
 
 const Navbar: React.FC = () => {
   const location = useLocation();
@@ -53,7 +54,7 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <a href="/" className="flex items-center space-x-2">
             <img
-              src="/src/assets/jupyter-logo.png"
+              src={jupyterLogo}
               alt="jupyter-logo"
               className="h-8"
             />

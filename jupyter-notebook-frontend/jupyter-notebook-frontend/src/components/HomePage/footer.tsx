@@ -1,4 +1,6 @@
 import React from "react";
+import yopImg from "../../assets/yop.png";
+import udgImg from "../../assets/udg.png";
 
 const footer: React.FC = () => {
   return (
@@ -33,7 +35,7 @@ const footer: React.FC = () => {
           <div className="space-y-6">
             <div className="flex items-center justify-center space-x-4">
               <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white/20">
-                <img src="./src/assets/yop.png" alt="" className="-mt-3" />
+                <img src={yopImg} alt="" className="-mt-3" />
               </div>
               <div className="text-left">
                 <h3 className="text-white font-semibold text-xl">
@@ -113,7 +115,7 @@ const footer: React.FC = () => {
             <div className="inline-block bg-white/10 backdrop-blur-sm rounded-full px-6 py-3">
               <div className="flex items-center space-x-3">
                 <div className="relative w-8 h-8">
-                  <img src="./src/assets/udg.png" alt="" />
+                  <img src={udgImg} alt="" />
                 </div>
                 <p className="text-white text-sm">
                   Proyecto Académico - Universidad de Guadalajara

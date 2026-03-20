@@ -63,7 +63,7 @@ const Hero: React.FC = () => {
             }`}
           >
             <video
-              src="./src/assets/hero-video.mp4"
+              src=""
               className="w-full h-full object-cover"
               muted
               playsInline

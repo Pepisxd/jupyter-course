@@ -1,4 +1,6 @@
 import ContentSection from "./content-section";
+import jupyterUiImg from "../../assets/jupyter-ui.png";
+import algobienImg from "../../assets/algobien.webp";
 import ScrollAnimation from "../scrollAnimation";
 
 import type React from "react";
@@ -45,7 +47,7 @@ const Content: React.FC = () => {
               <div className="group relative">
                 <div className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden">
                   <img
-                    src="./src/assets/jupyter-ui.png"
+                    src={jupyterUiImg}
                     alt="Interfaz de Jupyter"
                     className="object-cover object-center transform transition-transform duration-300 group-hover:scale-105"
                   />
@@ -62,7 +64,7 @@ const Content: React.FC = () => {
               <div className="group relative">
                 <div className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden">
                   <img
-                    src="./src/assets/algobien.webp"
+                    src={algobienImg}
                     alt="Visualizaciones y gráficos"
                     className="object-cover object-center transform transition-transform duration-300 group-hover:scale-105"
                   />
