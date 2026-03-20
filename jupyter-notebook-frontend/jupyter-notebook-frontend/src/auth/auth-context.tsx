@@ -75,8 +75,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       // Actualizar el estado del usuario
       setUser({ nombre, email: userEmail, rol });
-    } catch (error: any) {
-      setError(error.response?.data?.message || "Error al iniciar sesión");
+    } catch (error) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      setError(axiosError.response?.data?.message || "Error al iniciar sesión");
       throw error;
     } finally {
       setLoading(false);
@@ -92,8 +93,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         email,
         password,
       });
-    } catch (error: any) {
-      setError(error.response?.data?.message || "Error al registrar usuario");
+    } catch (error) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      setError(axiosError.response?.data?.message || "Error al registrar usuario");
       throw error;
     } finally {
       setLoading(false);
@@ -124,6 +126,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {

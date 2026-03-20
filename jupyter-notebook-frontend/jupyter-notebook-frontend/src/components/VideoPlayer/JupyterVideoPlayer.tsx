@@ -162,6 +162,7 @@ export default function JupyterVideoPlayer({
   // Efecto para ocultar controles después de un tiempo de inactividad
   useEffect(() => {
     let timeout: NodeJS.Timeout;
+    const player = playerRef.current;
 
     const handleMouseMove = () => {
       setShowControls(true);
@@ -173,26 +174,20 @@ export default function JupyterVideoPlayer({
         }, 3000);
       }
     };
+    const handleMouseLeave = () => setShowControls(false);
+    const handleMouseEnter = () => setShowControls(true);
 
-    if (playerRef.current) {
-      playerRef.current.addEventListener("mousemove", handleMouseMove);
-      playerRef.current.addEventListener("mouseleave", () =>
-        setShowControls(false)
-      );
-      playerRef.current.addEventListener("mouseenter", () =>
-        setShowControls(true)
-      );
+    if (player) {
+      player.addEventListener("mousemove", handleMouseMove);
+      player.addEventListener("mouseleave", handleMouseLeave);
+      player.addEventListener("mouseenter", handleMouseEnter);
     }
 
     return () => {
-      if (playerRef.current) {
-        playerRef.current.removeEventListener("mousemove", handleMouseMove);
-        playerRef.current.removeEventListener("mouseleave", () =>
-          setShowControls(false)
-        );
-        playerRef.current.removeEventListener("mouseenter", () =>
-          setShowControls(true)
-        );
+      if (player) {
+        player.removeEventListener("mousemove", handleMouseMove);
+        player.removeEventListener("mouseleave", handleMouseLeave);
+        player.removeEventListener("mouseenter", handleMouseEnter);
       }
       clearTimeout(timeout);
     };

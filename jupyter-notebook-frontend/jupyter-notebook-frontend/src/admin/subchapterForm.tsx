@@ -159,7 +159,7 @@ const SubchapterForm: React.FC<SubchapterFormProps> = () => {
       }, 3000);
     } catch (error) {
       console.error("Error al crear la lección:", error);
-      setApiError((error as any).message || "Error desconocido");
+      setApiError(error instanceof Error ? error.message : "Error desconocido");
     } finally {
       setIsSubmitting(false);
     }

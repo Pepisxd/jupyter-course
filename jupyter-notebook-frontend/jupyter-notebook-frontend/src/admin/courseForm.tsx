@@ -74,20 +74,7 @@ const CourseForm: React.FC = () => {
     }
   };
 
-  if (!user || user.rol !== "admin") {
-    return (
-      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">
-          Acceso denegado
-        </h1>
-        <p className="text-gray-700">
-          No tienes permiso para acceder a esta página.
-        </p>
-      </div>
-    );
-  }
-
-  // Inicializar React Hook Form
+  // Inicializar React Hook Form (antes de cualquier return condicional)
   const {
     register,
     control,
@@ -120,6 +107,19 @@ const CourseForm: React.FC = () => {
     control,
     name: "lessons",
   });
+
+  if (!user || user.rol !== "admin") {
+    return (
+      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">
+          Acceso denegado
+        </h1>
+        <p className="text-gray-700">
+          No tienes permiso para acceder a esta página.
+        </p>
+      </div>
+    );
+  }
 
   // Manejar la subida de imágenes
   const handleImageUpload = async (
@@ -354,7 +354,7 @@ const CourseForm: React.FC = () => {
           </div>
 
           <div className="space-y-6">
-            {fields.map((field, index) => {
+            {fields.map((field: Lesson & { id: string }, index: number) => {
               const videoUrl = watchedLessons[index]?.videoUrl || "";
               const autoThumbnail = videoUrl
                 ? getYouTubeThumbnail(videoUrl)

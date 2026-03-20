@@ -45,7 +45,7 @@ const ChatInterface: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
-  const simulateAIResponse = (_userMessage: string): string => {
+  const simulateAIResponse = (): string => {
     const responses = [
       "Excelente pregunta. En Jupyter Notebooks, puedes usar esa funcionalidad para mejorar tu análisis de datos.",
       "Te recomiendo explorar las librerías de Python como pandas y numpy para ese tipo de operaciones.",
@@ -75,7 +75,7 @@ const ChatInterface: React.FC = () => {
       () => {
         const aiResponse: Message = {
           id: (Date.now() + 1).toString(),
-          content: simulateAIResponse(inputValue),
+          content: simulateAIResponse(),
           sender: "ai",
           timestamp: new Date(),
         };

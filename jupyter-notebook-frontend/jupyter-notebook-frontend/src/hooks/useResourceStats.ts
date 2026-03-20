@@ -145,6 +145,7 @@ export const useResourceStats = () => {
 
   useEffect(() => {
     fetchStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, user]);
 
   return {
