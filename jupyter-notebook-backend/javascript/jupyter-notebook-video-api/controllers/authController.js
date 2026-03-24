@@ -5,6 +5,9 @@ const jwt = require("jsonwebtoken");
 exports.register = async (req, res) => {
   const { nombre, email, password } = req.body;
   try {
+    if (!email || !email.endsWith("@alumnos.udg.mx")) {
+      return res.status(400).json({ message: "Solo se permite el registro con correo institucional (@alumnos.udg.mx)" });
+    }
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "Usuario ya existe" });

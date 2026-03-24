@@ -66,6 +66,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       errors.email = "Email inválido";
       isValid = false;
+    } else if (mode === "register" && !email.endsWith("@alumnos.udg.mx")) {
+      errors.email = "Solo se permite el registro con correo institucional (@alumnos.udg.mx)";
+      isValid = false;
     }
 
     // Validar contraseña (excepto en recuperación)
@@ -303,11 +306,14 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
                   ? "border border-red-500"
                   : "border border-transparent"
               }`}
-              placeholder="tu@email.com"
+              placeholder={mode === "register" ? "usuario@alumnos.udg.mx" : "tu@email.com"}
             />
           </div>
           {formErrors.email && (
             <p className="mt-1 text-sm text-red-500">{formErrors.email}</p>
+          )}
+          {mode === "register" && !formErrors.email && (
+            <p className="mt-1 text-xs text-white/40">Solo se acepta correo institucional @alumnos.udg.mx</p>
           )}
         </div>
 
