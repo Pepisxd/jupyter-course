@@ -2,10 +2,17 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const { Resend } = require("resend");
+const nodemailer = require("nodemailer");
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5174";
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
 
 exports.register = async (req, res) => {
   const { nombre, email, password } = req.body;
@@ -26,8 +33,8 @@ exports.register = async (req, res) => {
 
     const verifyUrl = `${FRONTEND_URL}/verificar?token=${verificationToken}`;
 
-    await resend.emails.send({
-      from: "Curso Jupyter <onboarding@resend.dev>",
+    await transporter.sendMail({
+      from: `"Curso Jupyter Notebook" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: "Verifica tu cuenta — Curso Jupyter Notebook",
       html: `
