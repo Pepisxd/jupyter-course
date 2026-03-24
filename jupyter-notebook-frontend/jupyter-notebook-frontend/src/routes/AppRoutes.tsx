@@ -11,6 +11,7 @@ import ChatInterface from "../pages/ChatPage";
 import ResourcesPage from "../pages/resourcesPage";
 import ExerciseGenerator from "../pages/ExerciseGenerator";
 import ContactPage from "../pages/ContactPage";
+import VerifyPage from "../pages/VerifyPage";
 
 const AppRoutes = () => {
   return (
@@ -38,6 +39,7 @@ const AppRoutes = () => {
         <Route path="/404" element={<NotFound />} />
         <Route path="/chat" element={<ChatInterface />} />
         <Route path="/contacto" element={<ContactPage />} />
+        <Route path="/verificar" element={<VerifyPage />} />
         <Route
           path="/admin/courses"
           element={

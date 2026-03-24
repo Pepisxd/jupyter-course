@@ -28,6 +28,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
   const [rememberMe, setRememberMe] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [resetEmailSent, setResetEmailSent] = useState(false);
+  const [registerEmailSent, setRegisterEmailSent] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState("");
 
   // Estados para validación
   const [formErrors, setFormErrors] = useState<{
@@ -117,7 +119,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
         closeModal(); // Cerrar modal después de login exitoso
       } else if (mode === "register") {
         await register(name, email, password);
-        closeModal(); // Cerrar modal después de registro exitoso
+        setRegisteredEmail(email);
+        setRegisterEmailSent(true);
       } else if (mode === "forgotPassword") {
         // Simular envío de correo de recuperación
         await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -237,6 +240,40 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
             </div>
           </>
         )}
+      </div>
+    );
+  }
+
+  // Mostrar confirmación de email enviado tras registro
+  if (mode === "register" && registerEmailSent) {
+    return (
+      <div className="text-center py-4">
+        <div className="flex justify-center mb-4">
+          <div className="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", damping: 10, stiffness: 100 }}
+            >
+              <Mail className="w-8 h-8 text-orange-500" />
+            </motion.div>
+          </div>
+        </div>
+        <h3 className="text-xl font-semibold text-white mb-2">¡Revisa tu correo!</h3>
+        <p className="text-white/70 mb-2">
+          Enviamos un enlace de verificación a:
+        </p>
+        <p className="text-[#FF5722] font-medium mb-6">{registeredEmail}</p>
+        <p className="text-white/50 text-sm mb-6">
+          Haz clic en el enlace del correo para activar tu cuenta. Puede tardar unos minutos.
+        </p>
+        <button
+          onClick={closeModal}
+          className="inline-flex items-center text-[#FF5722] hover:text-[#FF5722]/80"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Cerrar
+        </button>
       </div>
     );
   }
