@@ -1,8 +1,10 @@
 import React from "react";
 import yopImg from "../../assets/yop.png";
 import udgImg from "../../assets/udg.png";
+import { useAuthModal } from "../../auth/auth-modal-context";
 
 const footer: React.FC = () => {
+  const { openModal } = useAuthModal();
   return (
     <section className="relative py-20 bg-[#FF5722] overflow-hidden">
       <div className="absolute inset-0 opacity-10">
@@ -18,17 +20,17 @@ const footer: React.FC = () => {
             Únete a miles de desarrolladores que ya han transformado su carrera
             con Jupyter. ¡Empieza tu viaje hoy!
           </p>
-          <a
-            href="/inscripcion"
+          <button
+            onClick={() => openModal("register")}
             className="inline-block bg-white text-[#FF5722] font-bold py-3 px-8 rounded-full text-lg hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg"
           >
             Inscríbete Ahora
-          </a>
+          </button>
           <div className="text-white/90">
-            <p className="inline"> Ya tienes cuenta? </p>
-            <a href="/login" className="inline-block underline ">
-              Inicia sesion
-            </a>
+            <p className="inline"> ¿Ya tienes cuenta? </p>
+            <button onClick={() => openModal("login")} className="inline-block underline">
+              Inicia sesión
+            </button>
           </div>
 
           <div className="w-16 h-1 bg-white/20 mx-auto my-12"></div>

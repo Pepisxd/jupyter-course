@@ -1,8 +1,11 @@
 import type React from "react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import ScrollAnimation from "../scrollAnimation";
+import { useAuthModal } from "../../auth/auth-modal-context";
 
 const Hero: React.FC = () => {
+  const { openModal } = useAuthModal();
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
@@ -38,18 +41,21 @@ const Hero: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 pt-4">
-              <button className="bg-[#333333] hover:bg-[#222222] text-white font-medium py-3 px-6 rounded-lg transition-all transform hover:scale-105 shadow-lg">
+              <button
+                onClick={() => openModal("register")}
+                className="bg-[#333333] hover:bg-[#222222] text-white font-medium py-3 px-6 rounded-lg transition-all transform hover:scale-105 shadow-lg"
+              >
                 ¡Empieza gratis ahora!
               </button>
 
-              <a
-                href="/documentacion"
+              <Link
+                to="/resources"
                 className="inline-flex items-center justify-center text-white hover:text-white/80 font-medium transition-all py-3"
               >
                 <span className="border-b-2 border-white/70 hover:border-white">
                   Mira la documentación
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
