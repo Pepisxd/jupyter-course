@@ -26,7 +26,14 @@ const AppRoutes = () => {
           }
         />
         <Route path="/resources" element={<ResourcesPage />} />
-        <Route path="/exercises" element={<ExerciseGenerator />} />
+        <Route
+          path="/exercises"
+          element={
+            <ProtectedRoute>
+              <ExerciseGenerator />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<Navigate to="/404" />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="/chat" element={<ChatInterface />} />
