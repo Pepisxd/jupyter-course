@@ -22,6 +22,20 @@ const SIZE_TO_ROWS = {
   grande: 1000,
 };
 
+const DIFFICULTY_ALIASES = {
+  intermedia: "media",
+  intermediate: "media",
+  medium: "media",
+  básica: "basica",
+  básico: "basica",
+  basic: "basica",
+  advanced: "avanzada",
+};
+
+const TOPIC_ALIASES = {
+  general: "markdown",
+};
+
 const normalizeRequest = (body) => {
   const toKey = (value) =>
     String(value || "")
@@ -29,9 +43,12 @@ const normalizeRequest = (body) => {
       .toLowerCase()
       .replace(/\s+/g, "_");
 
+  const difficulty = toKey(body.difficulty || body.dificultad);
+  const topic = toKey(body.topic || body.tema);
+
   return {
-    topic: toKey(body.topic || body.tema),
-    difficulty: toKey(body.difficulty || body.dificultad),
+    topic: TOPIC_ALIASES[topic] ?? topic,
+    difficulty: DIFFICULTY_ALIASES[difficulty] ?? difficulty,
     exerciseType: toKey(body.exerciseType || body.tipo),
     datasetSize: toKey(body.datasetSize || body.tamano || body.tamanio),
     seed: Number.isFinite(body.seed) ? body.seed : null,

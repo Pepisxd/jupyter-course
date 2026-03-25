@@ -4,6 +4,7 @@ const {
   validateRequest,
 } = require("../utils/exerciseGenerator");
 
+
 const MODAL_URL = process.env.MODAL_URL || "";
 const MODAL_TIMEOUT_MS = Number(process.env.MODAL_TIMEOUT_MS || 600000);
 
@@ -81,9 +82,16 @@ const generateExerciseAI = async (req, res) => {
     const exercise = data.exercise;
 
     if (!exercise || !exercise.title) {
-      return res.status(422).json({
-        error: "invalid_ai_output",
-        message: "La respuesta del modelo no contiene un ejercicio válido.",
+      const seed = Math.floor(Math.random() * 1e9);
+      const fallback = buildExercise(normalized, seed);
+      return res.json({
+        meta: {
+          createdAt: new Date().toISOString(),
+          parameters: { ...normalized, seed },
+          source: "template",
+          version: "v1-fallback",
+        },
+        exercise: fallback,
       });
     }
 
@@ -98,16 +106,28 @@ const generateExerciseAI = async (req, res) => {
       exercise,
     });
   } catch (error) {
-    const message =
-      error && error.name === "AbortError"
-        ? "La solicitud al modelo expiró. Intenta de nuevo."
-        : error instanceof Error
-        ? error.message
-        : "Error desconocido.";
-    return res.status(500).json({
-      error: "modal_error",
-      message,
-    });
+    // Si Modal falla, usar plantilla local como fallback
+    try {
+      const seed = Math.floor(Math.random() * 1e9);
+      const fallback = buildExercise(normalized, seed);
+      return res.json({
+        meta: {
+          createdAt: new Date().toISOString(),
+          parameters: { ...normalized, seed },
+          source: "template",
+          version: "v1-fallback",
+        },
+        exercise: fallback,
+      });
+    } catch {
+      const message =
+        error && error.name === "AbortError"
+          ? "La solicitud al modelo expiró. Intenta de nuevo."
+          : error instanceof Error
+          ? error.message
+          : "Error desconocido.";
+      return res.status(500).json({ error: "modal_error", message });
+    }
   } finally {
     clearTimeout(timeout);
   }
