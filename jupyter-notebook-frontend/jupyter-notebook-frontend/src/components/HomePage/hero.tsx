@@ -69,7 +69,7 @@ const Hero: React.FC = () => {
             }`}
           >
             <video
-              src=""
+              src="https://pub-f17b74733c744e4e869977eef616c82d.r2.dev/hero-video.mp4"
               className="w-full h-full object-cover"
               muted
               playsInline
