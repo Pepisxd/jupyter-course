@@ -76,7 +76,9 @@ Reglas:
     messages: [{ role: "user", content: prompt }],
   });
 
-  const text = message.content[0].text.trim();
+  let text = message.content[0].text.trim();
+  // Eliminar bloques de markdown si Claude los incluyó
+  text = text.replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/, "").trim();
   return JSON.parse(text);
 }
 
