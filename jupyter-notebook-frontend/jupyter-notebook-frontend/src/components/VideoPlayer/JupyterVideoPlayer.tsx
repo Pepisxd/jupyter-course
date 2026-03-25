@@ -49,6 +49,8 @@ export default function JupyterVideoPlayer({
   const [playbackRate, setPlaybackRate] = useState(1);
   const [showPlaybackMenu, setShowPlaybackMenu] = useState(false);
   const playbackRates = [0.5, 0.75, 1, 1.25, 1.5, 2];
+  const [hoverTime, setHoverTime] = useState<number | null>(null);
+  const [hoverX, setHoverX] = useState(0);
 
   // Controlar reproducción
   const togglePlay = (e: React.MouseEvent) => {
@@ -255,6 +257,15 @@ export default function JupyterVideoPlayer({
           playsInline
         />
 
+        {/* Título del video */}
+        {title && hasStarted && (
+          <div
+            className={`absolute top-0 left-0 right-0 p-4 bg-gradient-to-b from-black/80 to-transparent transition-opacity duration-300 pointer-events-none ${showControls || !isPlaying ? "opacity-100" : "opacity-0"}`}
+          >
+            <h3 className="text-white text-sm font-medium">{title}</h3>
+          </div>
+        )}
+
         {/* Overlay de carga */}
         {isLoading && hasStarted && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/50">
@@ -271,20 +282,30 @@ export default function JupyterVideoPlayer({
               : "opacity-0 pointer-events-none"
           }`}
         >
-          {/* Título del video */}
-          {title && (
-            <div className="absolute top-0 left-0 right-0 p-4 bg-gradient-to-b from-black/80 to-transparent">
-              <h3 className="text-white text-lg font-medium">{title}</h3>
-            </div>
-          )}
-
           {/* Barra de progreso */}
           <div
             ref={progressRef}
-            className="w-full mb-4 cursor-pointer py-2 group"
+            className="w-full mb-4 cursor-pointer py-2 group relative"
             onClick={handleProgressClick}
+            onMouseMove={(e) => {
+              if (!progressRef.current || !videoRef.current) return;
+              const rect = progressRef.current.getBoundingClientRect();
+              const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+              setHoverTime(pos * videoRef.current.duration);
+              setHoverX(e.clientX - rect.left);
+            }}
+            onMouseLeave={() => setHoverTime(null)}
           >
-            <div className="w-full h-1.5 bg-white/30 rounded-full group-hover:h-2.5 transition-all duration-150 relative">
+            {/* Tooltip de tiempo */}
+            {hoverTime !== null && (
+              <div
+                className="absolute bottom-full mb-1 px-2 py-0.5 bg-black/80 text-white text-xs rounded pointer-events-none -translate-x-1/2"
+                style={{ left: hoverX }}
+              >
+                {formatTime(hoverTime)}
+              </div>
+            )}
+            <div className="w-full h-1.5 bg-white/30 rounded-full group-hover:h-2.5 transition-all duration-150">
               <div
                 className="h-full bg-[#FF5722] rounded-full"
                 style={{ width: `${progress}%` }}
