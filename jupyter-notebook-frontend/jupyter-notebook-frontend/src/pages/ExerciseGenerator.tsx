@@ -80,7 +80,7 @@ const ExerciseGenerator = () => {
   const [topic, setTopic] = useState("pandas");
   const [difficulty, setDifficulty] = useState("basica");
   const [exerciseType, setExerciseType] = useState("completar_codigo");
-  const [datasetSize, setDatasetSize] = useState("pequeno");
+  const datasetSize = "mediano";
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMsgIdx, setLoadingMsgIdx] = useState(0);
   const [error, setError] = useState("");
@@ -226,16 +226,6 @@ const ExerciseGenerator = () => {
                     { value: "corregir_errores", label: "Corregir errores" },
                     { value: "explicar_resultado", label: "Explicar resultado" },
                     { value: "analisis_texto", label: "Análisis en texto" },
-                  ],
-                },
-                {
-                  label: "Tamaño de dataset",
-                  value: datasetSize,
-                  onChange: setDatasetSize,
-                  options: [
-                    { value: "pequeno", label: "Pequeño (~40 filas)" },
-                    { value: "mediano", label: "Mediano (~200 filas)" },
-                    { value: "grande", label: "Grande (~1000 filas)" },
                   ],
                 },
               ].map(({ label, value, onChange, options }) => (
