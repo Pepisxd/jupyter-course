@@ -264,6 +264,7 @@ export default function JupyterVideoPlayer({
 
         {/* Controles */}
         <div
+          onClick={(e) => e.stopPropagation()}
           className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 transition-opacity duration-300 ${
             showControls || !isPlaying
               ? "opacity-100"
@@ -280,13 +281,15 @@ export default function JupyterVideoPlayer({
           {/* Barra de progreso */}
           <div
             ref={progressRef}
-            className="w-full h-2 bg-white/30 rounded-full mb-4 cursor-pointer"
+            className="w-full mb-4 cursor-pointer py-2 group"
             onClick={handleProgressClick}
           >
-            <div
-              className="h-full bg-[#FF5722] rounded-full"
-              style={{ width: `${progress}%` }}
-            ></div>
+            <div className="w-full h-1.5 bg-white/30 rounded-full group-hover:h-2.5 transition-all duration-150 relative">
+              <div
+                className="h-full bg-[#FF5722] rounded-full"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
           </div>
 
           {/* Controles principales */}
