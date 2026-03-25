@@ -100,7 +100,7 @@ const ExerciseGenerator = () => {
     }, 20000);
 
     try {
-      const response = await fetch(`${API_URL}/api/exercises/generate-ai`, {
+      const response = await fetch(`${API_URL}/api/exercises/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ topic, difficulty, exerciseType, datasetSize }),
@@ -260,11 +260,11 @@ const ExerciseGenerator = () => {
               )}
             </div>
 
-            <div className="mt-6 rounded-xl border border-[#FF5722]/20 bg-[#FF5722]/5 p-4 space-y-1">
-              <p className="flex items-center gap-1.5 text-[#FF5722] font-medium text-xs">
-                <Cpu className="w-3 h-3" /> CodeLlama-7B + LoRA fine-tuned
+            <div className="mt-6 rounded-xl border border-white/10 bg-white/5 p-4 space-y-1">
+              <p className="flex items-center gap-1.5 text-white/60 font-medium text-xs">
+                <Cpu className="w-3 h-3" /> Ejercicios generados al instante
               </p>
-              <p className="text-xs text-white/40">La primera generación puede tardar 2-3 min mientras el modelo carga en la GPU.</p>
+              <p className="text-xs text-white/30">Cada ejercicio incluye datos de ejemplo, pasos a seguir, pistas y solución.</p>
             </div>
           </motion.div>
 

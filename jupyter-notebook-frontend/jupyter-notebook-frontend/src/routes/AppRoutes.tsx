@@ -13,6 +13,7 @@ import ExerciseGenerator from "../pages/ExerciseGenerator";
 import ContactPage from "../pages/ContactPage";
 import VerifyPage from "../pages/VerifyPage";
 import TermsPage from "../pages/TermsPage";
+import AdminExercisePage from "../pages/AdminExercisePage";
 
 const AppRoutes = () => {
   return (
@@ -42,6 +43,14 @@ const AppRoutes = () => {
         <Route path="/contacto" element={<ContactPage />} />
         <Route path="/verificar" element={<VerifyPage />} />
         <Route path="/terminos" element={<TermsPage />} />
+        <Route
+          path="/admin/exercises"
+          element={
+            <ProtectedRoute>
+              <AdminExercisePage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/admin/courses"
           element={
