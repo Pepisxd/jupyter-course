@@ -204,7 +204,6 @@ const ExerciseGenerator = () => {
                     { value: "pandas", label: "Pandas" },
                     { value: "numpy", label: "NumPy" },
                     { value: "markdown", label: "Markdown" },
-                    { value: "general", label: "General" },
                   ],
                 },
                 {
@@ -224,8 +223,6 @@ const ExerciseGenerator = () => {
                   options: [
                     { value: "completar_codigo", label: "Completar código" },
                     { value: "corregir_errores", label: "Corregir errores" },
-                    { value: "explicar_resultado", label: "Explicar resultado" },
-                    { value: "analisis_texto", label: "Análisis en texto" },
                   ],
                 },
               ].map(({ label, value, onChange, options }) => (
