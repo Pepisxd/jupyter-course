@@ -10,7 +10,9 @@ const { GetObjectCommand } = require("@aws-sdk/client-s3");
 exports.getCourses = async (req, res) => {
   try {
     const lessons = await Lesson.find().lean();
-    const chapters = await Chapter.find().lean();
+    const chapters = await Chapter.find()
+      .sort({ order: 1, createdAt: 1 })
+      .lean();
 
     // Función para generar URL firmada compatible con R2
     const generateSignedUrl = async (url) => {
