@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import API_URL from "../lib/api";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Download, Sparkles, Wand2, ChevronDown, ChevronUp,
-  CheckCircle2, FileText, ListChecks, Cpu, AlertTriangle,
+  CheckCircle2, FileText, ListChecks, Cpu, AlertTriangle, ArrowRight,
 } from "lucide-react";
 import Navbar from "../components/HomePage/navbar";
 
@@ -16,7 +17,7 @@ const LOADING_MESSAGES = [
   "Iniciando el modelo fine-tuned...",
   "Cargando pesos del modelo (puede tardar 1-2 min)...",
   "Generando ejercicio con el modelo...",
-  "Claude estructurando el resultado...",
+  "Estructurando el resultado...",
   "Casi listo...",
 ];
 
@@ -107,8 +108,12 @@ const AdminExercisePage = () => {
         <div className="relative max-w-4xl mx-auto px-4 py-14">
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
             <p className="text-white/60 text-sm font-medium uppercase tracking-widest mb-2">Admin · Experimental</p>
-            <h1 className="text-4xl font-bold mb-3">Generador con IA + Claude</h1>
-            <p className="text-white/75 text-sm max-w-md">Modelo fine-tuned genera el ejercicio, Claude lo estructura y completa la solución.</p>
+            <h1 className="text-4xl font-bold mb-3">Generador de Ejercicios con IA</h1>
+            <p className="text-white/75 text-sm max-w-md">Modelo fine-tuned genera el ejercicio, la IA lo estructura y completa la solución.</p>
+            <Link to="/admin/exercises/compare"
+              className="mt-4 inline-flex items-center gap-1.5 text-white/70 hover:text-white text-sm border border-white/20 hover:border-white/40 rounded-full px-4 py-1.5 transition">
+              Comparar modos de generación <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </motion.div>
         </div>
       </div>
@@ -157,9 +162,9 @@ const AdminExercisePage = () => {
 
             <div className="mt-6 rounded-xl border border-[#FF5722]/20 bg-[#FF5722]/5 p-4 space-y-1">
               <p className="flex items-center gap-1.5 text-[#FF5722] font-medium text-xs">
-                <Cpu className="w-3 h-3" /> CodeLlama-7B + Claude Haiku
+                <Cpu className="w-3 h-3" /> Modelo fine-tuned + IA estructurada
               </p>
-              <p className="text-xs text-white/40">El modelo genera el ejercicio y Claude lo estructura. Puede tardar 2-4 min.</p>
+              <p className="text-xs text-white/40">El modelo genera el ejercicio y la IA lo estructura. Puede tardar 2-4 min.</p>
             </div>
           </motion.div>
 
@@ -174,7 +179,7 @@ const AdminExercisePage = () => {
                     <Sparkles className="absolute inset-0 m-auto w-6 h-6 text-[#FF5722]" />
                   </div>
                   <div>
-                    <p className="text-white/80 font-medium">Generando con IA + Claude</p>
+                    <p className="text-white/80 font-medium">Generando ejercicio...</p>
                     <p className="text-sm text-white/40 mt-1">{LOADING_MESSAGES[loadingMsgIdx]}</p>
                   </div>
                 </motion.div>
@@ -186,7 +191,7 @@ const AdminExercisePage = () => {
                         <div className="flex items-center gap-2 flex-wrap mb-1">
                           <h2 className="text-lg font-semibold">{result.exercise.title}</h2>
                           <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-purple-500/15 text-purple-400 border border-purple-500/30">
-                            IA + Claude
+                            IA Estructurada
                           </span>
                         </div>
                         <p className="text-xs text-white/35">{new Date(result.meta.createdAt).toLocaleString("es-MX")}{result.meta.model && ` · ${result.meta.model}`}</p>
@@ -280,7 +285,7 @@ const AdminExercisePage = () => {
                   className="flex h-full min-h-[300px] flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 bg-[#242424] p-10 text-center gap-3">
                   <Sparkles className="w-8 h-8 text-white/20" />
                   <p className="text-white/60 font-medium">Genera un ejercicio para comenzar</p>
-                  <p className="text-sm text-white/30">El modelo fine-tuned genera la idea, Claude la estructura.</p>
+                  <p className="text-sm text-white/30">El modelo fine-tuned genera y estructura el ejercicio.</p>
                 </motion.div>
               )}
             </AnimatePresence>

@@ -14,6 +14,7 @@ import ContactPage from "../pages/ContactPage";
 import VerifyPage from "../pages/VerifyPage";
 import TermsPage from "../pages/TermsPage";
 import AdminExercisePage from "../pages/AdminExercisePage";
+import ExerciseComparePage from "../pages/ExerciseComparePage";
 
 const AppRoutes = () => {
   return (
@@ -48,6 +49,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute>
               <AdminExercisePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/exercises/compare"
+          element={
+            <ProtectedRoute>
+              <ExerciseComparePage />
             </ProtectedRoute>
           }
         />
